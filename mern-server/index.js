@@ -7,7 +7,10 @@ const app = express();
 const port = process.env.PORT || 5000;
 
 // Middlewares
-app.use(cors());
+app.use(cors({
+  origin: '*', // Adjust according to your security requirements
+  methods: ['GET', 'POST'],
+}));
 app.use(express.json());
 
 app.use(express.static(path.join(__dirname, '../mern-client/dist'))); // Adjusted path
