@@ -1,12 +1,12 @@
 {
-  "name": "mern-server",
+  "name": "Book-Store-App",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "mern-server/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev" : "NODE_ENV=development nodemon index.js",
-    "start" : "NODE_ENV=production node index.js",
+    "dev" : "NODE_ENV=development nodemon mern-server/index.js",
+    "start" : "NODE_ENV=production node mern-server/index.js",
     "build" : "npm install && npm install --prefix mern-client && npm run build --prefix mern-client"
   },
   "author": "",
