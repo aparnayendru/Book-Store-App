@@ -12,7 +12,7 @@ app.get('/', (req, res) => {
   res.send('Hello World!')
 })
 
-const __dirname = path.resolve();
+
 
 //mongodb configuration
 
