@@ -10,6 +10,8 @@ const port = process.env.PORT || 5000;
 app.use(cors());
 app.use(express.json());
 
+app.use(express.static(path.join(__dirname, '../mern-client/dist'))); // Adjusted path
+
 // MongoDB configuration
 const uri = "mongodb+srv://mern-book-store:yMEVpZGi03QwdxdQ@cluster0.lqxsuqb.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0";
 
@@ -72,12 +74,10 @@ async function run() {
       res.send(result);
     });
 
-    // Serve static files from the React app
-    app.use(express.static(path.join(__dirname, 'mern-client/build')));
 
     // Handles all other routes by sending the React app
     app.get('*', (req, res) => {
-      res.sendFile(path.join(__dirname, 'mern-client/build', 'index.html'));
+      res.sendFile(path.join(__dirname, '../mern-client/dist', 'index.html'));
     });
 
     // Send a ping to confirm a successful connection
