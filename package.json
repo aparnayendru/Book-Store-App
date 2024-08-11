@@ -5,7 +5,7 @@
   "main": "mern-server/index.js",
   "scripts": {
     "build": "npm install && npm install --prefix mern-client && npm run build --prefix mern-client",
-    "start": "npm run build && cross-env NODE_ENV=production node mern-server/index.js",
+    "start": " cross-env NODE_ENV=production node mern-server/index.js",
     "client": "npm run build --prefix mern-client"
   },
   "keywords": [],
