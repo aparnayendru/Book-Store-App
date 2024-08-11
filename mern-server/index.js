@@ -1,7 +1,7 @@
-import path from 'path';
-import express from 'express';
-import cors from 'cors';
-import { MongoClient, ServerApiVersion, ObjectId } from 'mongodb';
+const express = require('express');
+const path = require('path');
+const cors = require('cors');
+const { MongoClient, ServerApiVersion, ObjectId } = require('mongodb');
 
 const app = express();
 const port = process.env.PORT || 5000;
@@ -12,6 +12,7 @@ app.use(express.json());
 
 // MongoDB configuration
 const uri = "mongodb+srv://mern-book-store:yMEVpZGi03QwdxdQ@cluster0.lqxsuqb.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0";
+
 const client = new MongoClient(uri, {
   serverApi: {
     version: ServerApiVersion.v1,
@@ -25,23 +26,27 @@ async function run() {
     await client.connect();
     const bookCollections = client.db("BookInventory").collection("books");
 
-    // API routes
+    // Insert a book to the database using POST method
     app.post("/upload-book", async (req, res) => {
       const data = req.body;
       const result = await bookCollections.insertOne(data);
       res.send(result);
     });
 
+    // Update a book data
     app.patch("/book/:id", async (req, res) => {
       const id = req.params.id;
       const updateBookData = req.body;
       const filter = { _id: new ObjectId(id) };
-      const updateDoc = { $set: { ...updateBookData } };
+      const updateDoc = {
+        $set: { ...updateBookData },
+      };
       const options = { upsert: true };
       const result = await bookCollections.updateOne(filter, updateDoc, options);
       res.send(result);
     });
 
+    // Delete a book data
     app.delete("/book/:id", async (req, res) => {
       const id = req.params.id;
       const filter = { _id: new ObjectId(id) };
@@ -49,6 +54,7 @@ async function run() {
       res.send(result);
     });
 
+    // Find by category
     app.get("/all-books", async (req, res) => {
       let query = {};
       if (req.query?.category) {
@@ -58,6 +64,7 @@ async function run() {
       res.send(result);
     });
 
+    // To get a single book data
     app.get("/book/:id", async (req, res) => {
       const id = req.params.id;
       const filter = { _id: new ObjectId(id) };
@@ -65,28 +72,25 @@ async function run() {
       res.send(result);
     });
 
-    await client.db("admin").command({ ping: 1 });
-    console.log("Connected to MongoDB!");
+    // Serve static files from the React app
+    app.use(express.static(path.join(__dirname, 'mern-client/build')));
 
+    // Handles all other routes by sending the React app
+    app.get('*', (req, res) => {
+      res.sendFile(path.join(__dirname, 'mern-client/build', 'index.html'));
+    });
+
+    // Send a ping to confirm a successful connection
+    await client.db("admin").command({ ping: 1 });
+    console.log("Pinged your deployment. You successfully connected to MongoDB!");
   } finally {
-    // Don't close the connection if the server is running
+    // Ensures that the client will close when you finish/error
     // await client.close();
   }
 }
 
 run().catch(console.dir);
 
-// Serve frontend static files
-if (process.env.NODE_ENV === "production") {
-  const __dirname = path.resolve();
-  app.use(express.static(path.join(__dirname, "/mern-client/dist")));
-
-  app.get("*", (req, res) => {
-    res.sendFile(path.resolve(__dirname, "mern-client", "dist", "index.html"));
-  });
-}
-
-// Start the server
 app.listen(port, () => {
-  console.log(`Server listening on port ${port}`);
+  console.log(`Example app listening on port ${port}`);
 });
