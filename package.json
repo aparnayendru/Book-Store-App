@@ -1,11 +1,14 @@
 {
   "name": "book-store-app",
   "version": "1.0.0",
-  "description": "",
+  "description": "A book store application built with MERN stack",
   "main": "mern-server/index.js",
   "scripts": {
-    
-    "start": "nodemon mern-server/index.js"
+    "start": "node mern-server/index.js",
+    "build": "cd mern-client && npm install && npm run build",
+    "dev": "concurrently \"npm run server\" \"npm run client\"",
+    "server": "nodemon mern-server/index.js",
+    "client": "cd mern-client && npm start"
   },
   "keywords": [],
   "author": "",
@@ -23,6 +26,7 @@
   },
   "devDependencies": {
     "cross-env": "^7.0.3",
-    "nodemon": "^3.1.4"
+    "nodemon": "^3.1.4",
+    "concurrently": "^8.0.1"
   }
 }
