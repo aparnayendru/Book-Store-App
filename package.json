@@ -1,6 +1,7 @@
 {
   "name": "Book-Store-App",
   "version": "1.0.0",
+  "type" : "module",
   "description": "",
   "main": "mern-server/index.js",
   "scripts": {
