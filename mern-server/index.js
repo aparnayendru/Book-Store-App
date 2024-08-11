@@ -1,3 +1,5 @@
+import path from "path";
+
 const express = require('express')
 const app = express()
 const port = process.env.PORT || 5000;
@@ -11,6 +13,7 @@ app.get('/', (req, res) => {
   res.send('Hello World!')
 })
 
+const __dirname = path.resolve();
 
 //mongodb configuration
 
@@ -99,6 +102,14 @@ async function run() {
   }
 }
 run().catch(console.dir);
+
+if(process.env.NODE_ENV === "production") {
+  app.use(express.static(path.join(__dirname, "/mern-client/dist")));
+
+  app.get("*", (req,res) => {
+    res.sendFile(path.resolve(__dirname, "mern-client","dist", "index.html"));
+  })
+}
 
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`)
