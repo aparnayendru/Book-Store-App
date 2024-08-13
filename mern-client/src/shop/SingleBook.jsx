@@ -2,7 +2,7 @@ import React from 'react'
 import { useLoaderData } from 'react-router-dom'
 
 const SingleBook = () => {
-    const { _id, bookTitle, imageURL, bookDescription } = useLoaderData();
+    const { _id, bookTitle, imageURL, bookDescription, category} = useLoaderData();
     
     // Simple error handling if data is missing
     if (!bookTitle || !imageURL || !bookDescription) {
@@ -27,6 +27,11 @@ const SingleBook = () => {
             </div>
             <div className='lg:w-1/2 mt-4 lg:mt-0'>
                 <h2 className='font-bold text-lg md:text-xl lg:text-2xl'>{bookTitle}</h2>
+                <h3 className="font-bold text-base sm:text-lg md:text-xl lg:text-2xl mt-1 sm:mt-2 lg:mt-3">
+                    Genre: <span className="font-serif text-slate-700 text-sm sm:text-base md:text-lg lg:text-xl">
+                        {category}
+                    </span>
+                </h3>
                 <p className='font-semibold mt-2'>{bookDescription}</p>
             </div>
         </div>
