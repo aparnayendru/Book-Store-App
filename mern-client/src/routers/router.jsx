@@ -1,6 +1,5 @@
 import {
     createBrowserRouter,
-    RouterProvider,
   } from "react-router-dom";
 import App from "../App";
 import Home from "../home/home";
@@ -43,7 +42,7 @@ import Logout from "../components/Logout";
         {
             path: "/book/:id",
             element: <SingleBook/>,
-            loader: ({params}) =>fetch(`http://localhost:5000/book/${params.id}`)
+            loader: ({params}) =>fetch(`aparnayendru/Book-Store-App/book/${params.id}`)
         }
 
       ]
@@ -68,7 +67,7 @@ import Logout from "../components/Logout";
         {
           path: "/admin/dashboard/edit-books/:id",
           element: <EditBooks/>,
-          loader: ({params}) =>fetch(`http://localhost:5000/book/${params.id}`)
+          loader: ({params}) =>fetch(`aparnayendru/Book-Store-App/book/${params.id}`)
         }
       ]
     },{
