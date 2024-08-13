@@ -10,6 +10,7 @@ const port = process.env.PORT || 5000;
 app.use(cors({
   origin: '*', // Adjust according to your security requirements
   methods: ['GET', 'POST'],
+  credentials: true
 }));
 app.use(express.json());
 
