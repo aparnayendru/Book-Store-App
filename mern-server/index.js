@@ -8,7 +8,7 @@ const port = process.env.PORT || 5000;
 
 // Middlewares
 app.use(cors({
-  origin: '*', // Adjust according to your security requirements
+  origin: '*', 
   methods: ['GET', 'POST'],
   credentials: true
 }));
@@ -31,6 +31,19 @@ async function run() {
   try {
     await client.connect();
     const bookCollections = client.db("BookInventory").collection("books");
+
+    // This should be at the top before other routes
+    app.get('/hello', (req, res) => {
+      res.send('Hello world!');
+    });
+
+    // Other routes go here
+
+
+    // Handles all other routes by sending the React app
+    app.get('*', (req, res) => {
+      res.sendFile(path.join(__dirname, '../mern-client/dist', 'index.html'));
+    });
 
     // Insert a book to the database using POST method
     app.post("/upload-book", async (req, res) => {
@@ -76,12 +89,6 @@ async function run() {
       const filter = { _id: new ObjectId(id) };
       const result = await bookCollections.findOne(filter);
       res.send(result);
-    });
-
-
-    // Handles all other routes by sending the React app
-    app.get('*', (req, res) => {
-      res.sendFile(path.join(__dirname, '../mern-client/dist', 'index.html'));
     });
 
     // Send a ping to confirm a successful connection
