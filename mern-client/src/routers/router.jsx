@@ -42,7 +42,7 @@ import Logout from "../components/Logout";
         {
             path: "/book/:id",
             element: <SingleBook/>,
-            loader: ({params}) =>fetch(`aparnayendru/Book-Store-App/book/${params.id}`)
+            loader: ({params}) =>fetch(`https://book-store-app-1-49c8.onrender.com/book/${params.id}`)
         }
 
       ]
@@ -67,7 +67,7 @@ import Logout from "../components/Logout";
         {
           path: "/admin/dashboard/edit-books/:id",
           element: <EditBooks/>,
-          loader: ({params}) =>fetch(`aparnayendru/Book-Store-App/book/${params.id}`)
+          loader: ({params}) =>fetch(`https://book-store-app-1-49c8.onrender.com/book/${params.id}`)
         }
       ]
     },{
